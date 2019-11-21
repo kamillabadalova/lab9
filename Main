@@ -1,0 +1,101 @@
+package lab9;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Application;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public class Main extends Application {
+    public static void main(String[] args) {
+    
+        launch(args);
+    }
+
+    public class Table {
+        private SimpleStringProperty num, temp;
+
+        public String getNum() {
+            return num.get();
+        }
+
+        public String getTemp() {
+            return temp.get();
+        }
+
+
+        Table(String num, String temp ) {
+            this.num = new SimpleStringProperty(num);
+            this.temp = new SimpleStringProperty(temp);
+        }
+
+    }
+
+    private final TableView <Table> tableView = new TableView<>();
+    private final ObservableList <Table> list = FXCollections.observableArrayList();
+
+    public void start(Stage primaryStage) {
+        Group root = new Group();
+
+        TableColumn columnNum = new TableColumn("Число");
+        columnNum.setCellValueFactory(
+                new PropertyValueFactory<>("num"));
+
+        TableColumn columnTemp = new TableColumn("Температура");
+        columnTemp.setCellValueFactory(
+                new PropertyValueFactory<>("temp"));
+
+        tableView.setPrefHeight(500);
+        tableView.setItems(list);
+        tableView.getColumns().addAll(
+                columnNum, columnTemp );
+
+        VBox vBox = new VBox();
+        vBox.setSpacing(10);
+        vBox.getChildren().add(tableView);
+
+        root.getChildren().add(vBox);
+
+        primaryStage.setScene(new Scene(root, 250, 500));
+        primaryStage.show();
+        primaryStage.setTitle("TableView");
+
+        readCSV();
+    }
+
+    private void readCSV() {
+        String CsvFile = "src/temp2.csv";
+        String delimiter = ";";
+        BufferedReader br;
+        try {
+            br = new BufferedReader(new FileReader(CsvFile));
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] fields = line.split(delimiter, 2);
+                Table table = new Table(fields[0], fields[1] );
+                list.add(table);
+            }
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(MM.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(MM.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+}
