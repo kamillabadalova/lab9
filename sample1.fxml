@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lab9.Controller1">
+   <children>
+       <ComboBox fx:id="month" layoutX="39.0" layoutY="14.0" prefHeight="39.0" prefWidth="172.0" promptText="Месяц">
+       <items>
+       <FXCollections fx:factory="observableArrayList">
+           <String fx:value="январь" />
+           <String fx:value="февраль" />
+           <String fx:value="март" />
+           <String fx:value="апрель" />
+           <String fx:value="май" />
+           <String fx:value="июнь" />
+           <String fx:value="июль" />
+           <String fx:value="август" />
+           <String fx:value="сентябрь" />
+           <String fx:value="октябрь" />
+           <String fx:value="ноябрь" />
+           <String fx:value="декабрь" />
+       </FXCollections>
+       </items>
+       </ComboBox>
+      <Button layoutX="249.0" layoutY="14.0" mnemonicParsing="false" onAction="#onClickMethod" prefHeight="39.0" prefWidth="110.0" text="Показать" />
+       <TableView fx:id="tableView" layoutX="39.0" layoutY="67.0" prefHeight="523.0" prefWidth="320.0">
+        <columns>
+          <TableColumn fx:id="columnNum" prefWidth="128.0" text="Число" />
+          <TableColumn fx:id="columnTemp" prefWidth="149.0" text="Температура" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
